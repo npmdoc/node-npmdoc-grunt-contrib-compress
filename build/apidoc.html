@@ -1,0 +1,139 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/gruntjs/grunt-contrib-compress#readme"
+
+    >grunt-contrib-compress (v1.4.1)</a>
+</h1>
+<h4>Compress files and folders</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-contrib-compress">module grunt-contrib-compress</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-contrib-compress.grunt-contrib-compress">
+            function <span class="apidocSignatureSpan"></span>grunt-contrib-compress
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-contrib-compress" id="apidoc.module.grunt-contrib-compress">module grunt-contrib-compress</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-contrib-compress.grunt-contrib-compress" id="apidoc.element.grunt-contrib-compress.grunt-contrib-compress">
+        function <span class="apidocSignatureSpan"></span>grunt-contrib-compress
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-contrib-compress = function (grunt) {
+  var _ = require(&#x27;lodash&#x27;);
+  var compress = require(&#x27;./lib/compress&#x27;)(grunt);
+  var iltorb;
+
+  try {
+    iltorb = require(&#x27;iltorb&#x27;);
+  } catch (er) {
+    iltorb = null;
+  }
+
+  grunt.registerMultiTask(&#x27;compress&#x27;, &#x27;Compress files.&#x27;, function() {
+    compress.options = this.options({
+      archive: null,
+      mode: null,
+      level: 1
+    });
+
+    if (typeof compress.options.archive === &#x27;function&#x27;) {
+      compress.options.archive = compress.options.archive();
+    }
+
+    compress.options.mode = compress.options.mode || compress.autoDetectMode(compress.options.archive);
+
+    if (compress.options.mode.match(&#x27;brotli&#x27;) &#x26;&#x26; !iltorb) {
+        grunt.fail.fatal(&#x27;iltorb dependency wasn\&#x27;t found; in order to use brotli, &#x27; +
+                          &#x27;make sure you have a supported C++ compiler available and run `npm install` again.&#x27;);
+    }
+
+    if (_.includes([&#x27;zip&#x27;, &#x27;tar&#x27;, &#x27;tgz&#x27;, &#x27;gzip&#x27;, &#x27;deflate&#x27;, &#x27;deflateRaw&#x27;, &#x27;brotli&#x27;], compress.options.mode) === false) {
+      grunt.fail.warn(&#x27;Mode &#x27; + String(compress.options.mode) + &#x27; not supported.&#x27;);
+    }
+
+    if (/gzip|brotli/.test(compress.options.mode) || compress.options.mode.slice(0, 7) === &#x27;deflate&#x27;) {
+      compress[compress.options.mode](this.files, this.async());
+    } else {
+      compress.tar(this.files, this.async());
+    }
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
